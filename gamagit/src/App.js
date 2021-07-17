@@ -1,14 +1,18 @@
 import React, { useState } from "react";
+import axios from 'axios';
 
 function App(props) {
-  const [ usuario, setUsuario ] = useState('Haddad');
-  return (
-    <>
-      <h1>{ props.title }</h1>
-      <p>{ usuario }</p>
-      <input name="usuario" id="usuario" className="usuarioInput" placeholder="Usuário" />
-    </>
-  );
+	const [usuario, setUsuario] = useState('');
+	function handlePesquisa() {
+		console.log(usuario);
+		axios.get(`https://api.github.com/users/${usuario}/repos`).then(response => console.log(response.data));
+	}
+	return (
+		<>
+			<input className="usuarioInput" placeholder="Usuário" value={usuario} onChange={e => setUsuario(e.target.value)} />
+			<button type="button" onClick={handlePesquisa}>Pesquisar</button>
+		</>
+	);
 }
 
 export default App;
